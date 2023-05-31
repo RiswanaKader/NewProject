@@ -1,0 +1,100 @@
+package com.Goibibo_Winter.test;
+
+import java.util.Scanner;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.Goibibo_Winter.base.BaseClass;
+import com.Goibibo_Winter.pom.PageObjectManager;
+
+public class TestRun extends BaseClass {
+	static PageObjectManager pom=new PageObjectManager(driver);
+	static Scanner s=new Scanner(System.in);
+	@BeforeMethod
+	public static void browserLaunch() {
+		launchUrl("chrome");
+		urlLaunch("https://www.goibibo.com/");
+	}
+	@Test
+	public static void login() throws InterruptedException {
+		elementDisplayed(pom.getLt().getLogin());
+		Thread.sleep(3000);
+		
+		input(pom.getLt().getLogin(),"7339536874");
+		Thread.sleep(3000);
+		
+		String n=s.next();
+		input(pom.getLt().getOtp(),n);
+		
+		current(n);
+		
+	
+		explicitWait(pom.getLt().getProfile());
+		mouseHover(pom.getLt().getProfile());
+		
+		}
+	@AfterMethod
+	public static void profile()
+	{
+		driver.navigate().to("https://www.goibibo.com/profile/");
+		
+		 String actual=driver.getCurrentUrl();
+		 System.out.println(actual);
+		    
+	    String expected="https://www.goibibo.com/profile/";
+		    
+	    Assert.assertEquals(actual, expected);
+	    
+	    String act = pom.getLt().getNumber().getAttribute("value");
+	    System.out.println(act);
+	    
+	    String exp="7339536874";
+	    Assert.assertEquals(act, exp);
+	    
+	    String act1 = pom.getLt().getEmail().getAttribute("value");
+	    System.out.println(act1);
+	    
+	    String exp1="rissweet4@gmail.com";
+	    Assert.assertEquals(act1, exp1);
+	    
+	    elementDisplayed(pom.getLt().getLname());
+	    System.out.println("displayed");
+	    
+	    scroll(0,200);
+	    
+	    elementDisplayed(pom.getLt().getMale());
+	    System.out.println("displayed");
+	    
+	    elementDisplayed(pom.getLt().getFemale());
+	    System.out.println("displayed");
+	    
+	    clickOnElement(pom.getLt().getFemale());
+	    
+	    clickOnElement(pom.getLt().getDob());
+	    
+	    elementDisplayed(pom.getLt().getMonth());
+	    System.out.println("displayed");
+	    
+	    elementDisplayed(pom.getLt().getYear());
+	    System.out.println("displayed");
+	    
+	    clickOnElement(pom.getLt().getDay());
+	    
+	    elementDisplayed(pom.getLt().getSave());
+	    System.out.println("displayed");
+	    
+	    elementDisplayed(pom.getLt().getCancel());
+	    System.out.println("displayed"); 
+	    
+	    
+	    driver.close();
+	    
+	}
+}
+
